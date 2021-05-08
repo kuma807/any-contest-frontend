@@ -1,11 +1,24 @@
 import { Table} from 'react-bootstrap';
 import {Link} from "react-router-dom";
 
-const Fields = ({fields}) => (
+const fields = [
+  {
+    name: "math"
+  },
+  {
+    name: "programe"
+  },
+  {
+    name: "quize"
+  }
+]
+
+const Fields = () => {
+  return (
   <Table striped>
   <tbody>
     {fields.map(field =>
-      <tr key={field.id}>
+      <tr key={field.name}>
         <td>
           <Link to={`/fields/${field.name}`}>
             {field.name}
@@ -14,7 +27,7 @@ const Fields = ({fields}) => (
       </tr>
     )}
   </tbody>
-</Table>
-)
-
+  </Table>
+  );
+}
 export default Fields;

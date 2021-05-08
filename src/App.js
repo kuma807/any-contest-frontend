@@ -11,6 +11,7 @@ import {
 import HomeForm from "./components/HomeForm";
 import Fields from "./components/Fields";
 import Field from "./components/Field";
+import Contest from "./components/Contest";
 import Header from './components/Header/Header';
 import LoginForm from './components/LoginForm';
 import SignupForm from './components/SignupForm';
@@ -29,23 +30,110 @@ const Users = () => (
 const App = () => {
   const fields = [
     {
-      name: "math"
+      name: "math",
+      description: "数学のコンテスト",
+      contests: [
+        {
+          name: "math1",
+          minRating: 0,
+          maxRating: 1999,
+          maxPref: 2400,
+          penalty: 300,
+          startTime: new Date(2021, 4, 8, 21, 0, 0),
+          endTime: new Date(2021, 4, 8, 22, 39, 59, 999),
+          problem: [
+            {
+              id: 0,
+              name: "problem1",
+              content: "whats 1 + 1",
+              writer: "user1"
+            },
+            {
+              id: 1,
+              name: "problem2",
+              content: "whats 5 / 10",
+              writer: "user1"
+            }
+          ],
+          participant: [
+            {
+              id: "user1"
+            },
+            {
+              id: "user2"
+            }
+          ],
+          submission:[
+            {
+              id:0
+            },
+            {
+              id:1
+            }
+          ]
+        },
+        {
+          name: "superMath",
+          minRating: 1200,
+          maxRating: 99999,
+          maxPref: 99999,
+          penalty: 300,
+          startTime: new Date(2021, 4, 9, 21, 0, 0),
+          endTime: new Date(2021, 4, 9, 22, 59, 59, 999),
+          problem: [
+            {
+              id: 0,
+              name: "max1",
+              content: "whats 1000 + 1000",
+              writer: "user1"
+            },
+            {
+              id: 1,
+              name: "problem2",
+              content: "whats 5 * 1000 / 10",
+              writer: "user2"
+            }
+          ],
+          participant: [
+            {
+              id: "user1"
+            },
+            {
+              id: "user2"
+            },
+            {
+              id: "user3"
+            }
+          ],
+          submission:[
+            {
+              id:0
+            },
+            {
+              id:1
+            }
+          ]
+        }
+      ]
     },
     {
-      name: "programe"
+      name: "programe",
+      description: "競プロのコンテスト"
     },
     {
-      name: "quize"
+      name: "quize",
+      description: "クイズのコンテスト"
     }
   ]
 
   const [user, setUser] = useState({});
   const [message, setMessage] = useState(null);
 
-  const matchField = useRouteMatch('/fields/:name')
-  const field = matchField 
-    ? fields.find(field => field.name === matchField.params.name)
-    : null
+  const matchField = useRouteMatch('/fields/:field');
+  const fieldName = matchField ? matchField.params.field: null;
+
+  const matchContest = useRouteMatch('/contests/:contest');
+  const contestName = matchContest ? matchContest.params.contest: null;
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedUser');
@@ -66,11 +154,14 @@ const App = () => {
       <Header user={user} />
 
       <Switch>
-        <Route path="/fields/:name">
-          <Field field={field} />
+        <Route path="/fields/:field">
+          <Field fieldName={fieldName} />
+        </Route>
+        <Route path="/contests/:contest">
+          <Contest contestName={contestName} />
         </Route>
         <Route path="/fields">
-          <Fields fields={fields} />
+          <Fields />
         </Route>
         <Route path="/users">
           {user ? <Users /> : <Redirect to="/login" />}
