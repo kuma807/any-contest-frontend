@@ -1,94 +1,90 @@
-const contests = [
-  {
-    name: "math1",
-    minRating: 0,
-    maxRating: 1999,
-    maxPref: 2400,
-    penalty: 300,
-    startTime: new Date(2021, 4, 8, 21, 0, 0),
-    endTime: new Date(2021, 4, 8, 22, 39, 59, 999),
-    problem: [
-      {
-        id: 0,
-        name: "problem1",
-        content: "whats 1 + 1",
-        writer: "user1"
-      },
-      {
-        id: 1,
-        name: "problem2",
-        content: "whats 5 / 10",
-        writer: "user1"
-      }
-    ],
-    participant: [
-      {
-        id: "user1"
-      },
-      {
-        id: "user2"
-      }
-    ],
-    submission:[
-      {
-        id:0
-      },
-      {
-        id:1
-      }
-    ]
-  },
-  {
-    name: "superMath",
-    minRating: 1200,
-    maxRating: 99999,
-    maxPref: 99999,
-    penalty: 300,
-    startTime: new Date(2021, 4, 9, 21, 0, 0),
-    endTime: new Date(2021, 4, 9, 22, 59, 59, 999),
-    problem: [
-      {
-        id: 0,
-        name: "max1",
-        content: "whats 1000 + 1000",
-        writer: "user1"
-      },
-      {
-        id: 1,
-        name: "problem2",
-        content: "whats 5 * 1000 / 10",
-        writer: "user2"
-      }
-    ],
-    participant: [
-      {
-        id: "user1"
-      },
-      {
-        id: "user2"
-      },
-      {
-        id: "user3"
-      }
-    ],
-    submission:[
-      {
-        id:0
-      },
-      {
-        id:1
-      }
-    ]
-  }
-]
+import ContestHeader from "./Header/ContestHeader";
+const contests = {
+  name: "math1",
+  description: "good contest",
+  minRating: 0,
+  maxRating: 1999,
+  maxPref: 2400,
+  penalty: 300,
+  startTime: new Date(2021, 4, 8, 21, 0, 0),
+  endTime: new Date(2021, 4, 8, 22, 39, 59, 999),
+  problem: [
+    {
+      name: "problem1",
+      writer: "user1"
+    },
+    {
+      name: "problem2",
+      writer: "user1"
+    }
+  ],
+  participant: [
+    {
+      id: "user1"
+    },
+    {
+      id: "user2"
+    }
+  ],
+  submission:[
+    {
+      id:0
+    },
+    {
+      id:1
+    }
+  ]
+}
 
 const Contest = ({ contestName }) => {
-  const contest = contests.find((c) => c.name === contestName);
+  const contest = contests;
+  const problems = contest.problem;
   return (
     <div>
+      <ContestHeader contestName={contestName} />
       <h2>{contest.name}</h2>
       <div>{contest.description}</div>
+      <div>
+      わかりやすい文章は誰にでも書けます。
+
+小説のような魅力的な文章に決まった型はありませんが、わかりやすい文章には型があります。
+
+この記事では、わかりやすい文章を書くための16のルールを、オリジナルの例文つきでご紹介します。16のルールは、マケフリ編集部が普段の相互レビューで指摘したり、指摘されたりするポイント、いわば社内のライティングマニュアルです。
+
+「わかりやすい文章を書きたいが、何に気をつければいいかわからない」
+「先輩から文章がわかりにくいと言われるが、何がダメなのかわからない」
+「自分の文章がわかりやすいのかどうかすらよくわからない」
+
+そんなみなさまのお悩みを解決する記事です。
+
+「誰でも80点以上の文章が書ける ライティングテクニック39選」では、この記事でご紹介する内容に加えて、説得力を持たせる書き方のルールや、読み手に好印象を与える書き方のルールも解説しています。あわせてごらんください。
+この記事のもくじ [非表示]
+
+わかりやすい文章の書き方１：情報の削除と具体化
+なくても意味が通る語句を削る
+不要な修飾語を削る
+不要な接続詞を削る
+重言の使用を避ける
+指示語は削る、もしくは具体化する
+抽象的な表現を具体化する
+わかりやすい文章の書き方２：文法と文構造
+主語を明示する
+主語と述語を対応させる
+読点を正しい位置に打つ
+修飾語は被修飾語の直前に置く
+修飾語が２つ以上あるときは長い修飾語を先に書く
+わかりやすい文章の書き方３：ぱっと見の読みやすさ
+ひらく言葉、閉じる言葉
+漢字、ひらがな、カタカナのバランス
+箇条書きを使いこなす
+わかりやすい文章の書き方４：文章の構成
+結論を先に述べる
+全体像を先に示す
+誰でも80点以上の文章が書けるライティングテクニック39選
+わかりやすい文章の書き方１：情報の削除と具体化
+わかりやすい文章には、不要な情報の削除と、抽象的な表現の具体化が欠かせません。不要な情報や抽象的な表現が多い文章は、「長いわりによくわからない文章」になってしまうからです。
+      </div>
     </div>
   )
 }
-export default Contest
+export default Contest;
