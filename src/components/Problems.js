@@ -19,28 +19,26 @@ const Problems = ({ contestName }) => {
   return (
     <div>
     <ContestHeader contestName={contestName} />
-    <Container style={{paddingTop: 40}}>
-      <Table bordered>
-      <thead>
-        <tr>
-          <th scope="col"> </th>
-          <th scope="col">問題名</th>
+    <Table bordered>
+    <thead>
+      <tr>
+        <th scope="col"> </th>
+        <th scope="col">問題名</th>
+      </tr>
+    </thead>
+    <tbody>
+      {problems.map((problem, index) =>
+        <tr key={problem.name}>
+          <th scope="row">{index}</th>
+          <td>
+            <Link to={`/problems/${problem.name}`}>
+              {problem.name}
+            </Link>
+          </td>
         </tr>
-      </thead>
-      <tbody>
-        {problems.map((problem, index) =>
-          <tr key={problem.name}>
-            <th scope="row">{index}</th>
-            <td>
-              <Link to={`/problems/${problem.name}`}>
-                {problem.name}
-              </Link>
-            </td>
-          </tr>
-        )}
-      </tbody>
-      </Table>
-    </Container>
+      )}
+    </tbody>
+    </Table>
     </div>
   )
 }

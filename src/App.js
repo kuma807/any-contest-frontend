@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Alert } from 'react-bootstrap';
+import { Alert, Container } from 'react-bootstrap';
 
 import {
   Switch,
@@ -13,6 +13,9 @@ import Fields from "./components/Fields";
 import Field from "./components/Field";
 import Contest from "./components/Contest";
 import Problems from "./components/Problems";
+import Problem from "./components/Problem";
+import Submissions from "./components/Submission/Submissions";
+import Ranking from "./components/Ranking/Ranking";
 import Header from './components/Header/Header';
 import LoginForm from './components/LoginForm';
 import SignupForm from './components/SignupForm';
@@ -136,6 +139,9 @@ const App = () => {
   const matchContest = useRouteMatch('/contests/:contest');
   const contestName = matchContest ? matchContest.params.contest: null;
 
+  const matchProblem = useRouteMatch('/problems/:problem');
+  const problemName = matchProblem ? matchProblem.params.problem: null;
+
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedUser');
     if (loggedUserJSON) {
@@ -153,37 +159,47 @@ const App = () => {
         )}
       
       <Header user={user} />
-
-      <Switch>
-        <Route path="/fields/:field">
-          <Field fieldName={fieldName} />
-        </Route>
-        <Route path="/contests/:contest/problems">
-          <Problems contestName={contestName} />
-        </Route>
-        <Route path="/contests/:contest">
-          <Contest contestName={contestName} />
-        </Route>
-        <Route path="/fields">
-          <Fields />
-        </Route>
-        <Route path="/users">
-          {user ? <Users /> : <Redirect to="/login" />}
-        </Route>
-        <Route path="/login">
-          <LoginForm setUser={(userData) => setUser(userData)} setMessage={(messageData) => setMessage(messageData)} />
-        </Route>
-        <Route path="/signup">
-          <SignupForm setUser={(userData) => setUser(userData)} setMessage={(messageData) => setMessage(messageData)} />
-        </Route>
-        <Route path="/">
-          <HomeForm />
-        </Route>
-      </Switch>
-      <div>
-        <br />
-        <em>kuso app</em>
-      </div>
+      <Container>
+        <Switch>
+          <Route path="/fields/:field">
+            <Field fieldName={fieldName} />
+          </Route>
+          <Route path="/contests/:contest/problems">
+            <Problems contestName={contestName} />
+          </Route>
+          <Route path="/contests/:contest/submissions">
+            <Submissions contestName={contestName} />
+          </Route>
+          <Route path="/contests/:contest/ranking">
+            <Ranking contestName={contestName} numShow={1}/>
+          </Route>
+          <Route path="/contests/:contest">
+            <Contest contestName={contestName} />
+          </Route>
+          <Route path="/problems/:problem">
+            <Problem problemName={problemName} />
+          </Route>
+          <Route path="/fields">
+            <Fields />
+          </Route>
+          <Route path="/users">
+            {user ? <Users /> : <Redirect to="/login" />}
+          </Route>
+          <Route path="/login">
+            <LoginForm setUser={(userData) => setUser(userData)} setMessage={(messageData) => setMessage(messageData)} />
+          </Route>
+          <Route path="/signup">
+            <SignupForm setUser={(userData) => setUser(userData)} setMessage={(messageData) => setMessage(messageData)} />
+          </Route>
+          <Route path="/">
+            <HomeForm />
+          </Route>
+        </Switch>
+        <div>
+          <br />
+          <em>kuso app</em>
+        </div>
+      </Container>
     </div>
   )
 }
