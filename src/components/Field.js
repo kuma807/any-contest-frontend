@@ -1,39 +1,27 @@
 import { Table} from 'react-bootstrap';
 import {Link } from "react-router-dom";
-
-const fields = [
-  {
-    name: "math",
-    description: "数学のコンテスト",
-    contests: [
-      {
-        name: "math1"
-      },
-      {
-        name: "superMath"
-      }
-    ]
-  },
-  {
-    name: "programe",
-    description: "競プロのコンテスト"
-  },
-  {
-    name: "quize",
-    description: "クイズのコンテスト"
-  }
-]
+import {filterContests} from "../services/contests";
+import { useState, useEffect } from "react";
 
 const Field = ({fieldName}) => {
-  const field = fields.find((f) => f.name === fieldName);
+  const timeQuery = {
+    fromTime: "2000-00-00 00:00:00",
+    toTime: "2100-00-00 00:00:00"
+  }
+  const [contests, setcontests] = useState(null);
+  useEffect(() => {
+    filterContests(timeQuery).then(res => setcontests(res));
+  },[]);
+  if (contests === null) {
+    return <p>Loading contests...</p>;
+  }
   return (
     <div>
-      <h2>{field.name}</h2>
-      <div>{field.description}</div>
+      <h2>{fieldName}</h2>
       <Table striped>
       <tbody>
         {
-          field.contests.map(contest =>
+          contests.map(contest =>
           <tr key={contest.name}>
             <td>
               <Link to={`/contests/${contest.name}`}>

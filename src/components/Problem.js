@@ -1,19 +1,19 @@
 import ContestHeader from "./Header/ContestHeader";
 import JudgeForm from "./Judge/JudgeForm";
-
-const tempproblem = {
-  name: "problem1",
-  writer: "user1",
-  contestName: "math1",
-  problemStatement: "whats 1 + 1",
-  judgeType: "SimpleInput"
-}
+import {getProblem} from "../services/problems";
+import { useState, useEffect } from "react";
 
 const Problem = ({problemName}) => {
-  const problem = tempproblem;
+  const [problem, setProblem] = useState(null);
+  useEffect(() => {
+    getProblem(problemName).then(res => setProblem(res[0]));
+  },[]);
+  if (problem === null) {
+    return <p>Loading contests...</p>;
+  }
   return (
     <div>
-      <ContestHeader contestName={problem.contestName} />
+      <ContestHeader contestName={problem.contest} />
       <h1>
         {problem.name}
       </h1>

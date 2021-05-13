@@ -1,21 +1,18 @@
 import {Link} from "react-router-dom";
 import { Table, Container} from 'react-bootstrap';
+import {getContest} from "../services/contests";
+import { useState, useEffect } from "react";
 
 import ContestHeader from "./Header/ContestHeader";
 
-const temp_problem = [
-  {
-    name: "problem1",
-    writer: "user1"
-  },
-  {
-    name: "problem2",
-    writer: "user1"
-  }
-]
-
 const Problems = ({ contestName }) => {
-  const problems = temp_problem;
+  const [problemNames, setProblemNames] = useState(null);
+  useEffect(() => {
+    getContest(contestName).then(res => setProblemNames(res[0]["problemNames"]));
+  },[]);
+  if (problemNames === null) {
+    return <p>Loading contests...</p>;
+  }
   return (
     <div>
     <ContestHeader contestName={contestName} />
@@ -27,12 +24,12 @@ const Problems = ({ contestName }) => {
       </tr>
     </thead>
     <tbody>
-      {problems.map((problem, index) =>
-        <tr key={problem.name}>
+      {problemNames.map((name, index) =>
+        <tr key={name}>
           <th scope="row">{index}</th>
           <td>
-            <Link to={`/problems/${problem.name}`}>
-              {problem.name}
+            <Link to={`/problems/${name}`}>
+              {name}
             </Link>
           </td>
         </tr>
