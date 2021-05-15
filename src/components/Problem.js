@@ -1,5 +1,5 @@
 import ContestHeader from "./Header/ContestHeader";
-import JudgeForm from "./Judge/JudgeForm";
+import JudgeForm from "./SubmissionForm/JudgeForm";
 import {getProblem} from "../services/problems";
 import { useState, useEffect } from "react";
 
@@ -18,7 +18,7 @@ const Problem = ({problemName}) => {
         {problem.name}
       </h1>
       {problem.problemStatement}
-      <JudgeForm judgeType={problem.judgeType} />
+      <JudgeForm judgeType={problem.judgeType} contestName={problem.contest} problemName={problemName}/>
     </div>
   )
 }

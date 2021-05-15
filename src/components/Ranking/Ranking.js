@@ -1,63 +1,68 @@
 import React, { useState, useEffect } from 'react';
 import { Table } from 'react-bootstrap';
 import ContestHeader from "../Header/ContestHeader";
+import {getRanking} from "../../services/contests";
 
+const numShow = 20;
+const compare = (a, b) => {
+  if (a.point === b.point) {
+    if (a.submissionTime === b.submissionTime) {
+      return 0;
+    }
+    if (a.submissionTime > b.submissionTime) {
+      return 1;
+    }
+    else {
+      return -1;
+    }
+  }
+  return b.point - a.point;
+}
 
-const tempranking = [
-  {
-    rank: 1,
-    user: "user1",
-    score: 2000
-  },
-  {
-    rank: 2,
-    user: "user2",
-    score: 1900
-  },
-  {
-    rank: 3,
-    user: "user3",
-    score: 1000
-  },
-  {
-    rank: 4,
-    user: "user4",
-    score: 200
-  },
-]
-
-
-let ranking = [];
-let numParticipant;
-let maxPage;
-let keys = [];
-
-const Ranking = ({ contestName, numShow }) => {
+const Ranking = ({ contestName }) => {
+  const [maxPage, setMaxPage] = useState(0);
   const [page, setPage] = useState(1);
+  const [ranking, setRanking] = useState(null);
+  const [visibleRanking, setVisibleRanking] = useState(null);
 
   const handlePageMove = (num) => {
     const newPage = page + num;
     setPage(newPage);
+    setVisibleRanking(ranking.slice((newPage - 1) * numShow, newPage * numShow));
   }
 
   useEffect(
     () => {
-      ranking = tempranking;
+      getRanking(contestName).then((res) => {
+        console.log(res);
+        res.sort(compare);
+        setRanking(res);
+        setMaxPage(Math.ceil(res.length / numShow));
+        setVisibleRanking(res.slice(0, Math.min(numShow, res.length)));
+      });
     },
-    [page]
+    []
   )
 
-  useEffect(
-    () => {
-      numParticipant = tempranking.length;
-      maxPage = Math.ceil(numParticipant / numShow);
-      keys = ranking ? Object.keys(ranking[0]) : [];
-    }
-  )
-
+  if (visibleRanking === null) {
+    return (
+      <>
+      <ContestHeader contestName={contestName} />
+      <div>Loading contests...</div>
+      </>
+    )
+  }
+  if (visibleRanking.length === 0) {
+    return (
+      <>
+      <ContestHeader contestName={contestName} />
+      <div>参加者は居ません</div>
+      </>
+    )
+  }
   return (
     <>
-    <ContestHeader contestName={contestName} />
+    <ContestHeader contestName={contestName} active="ranking"/>
     {page !== 1 && 
       <input type="button" onClick={() => handlePageMove(-1)} value="previous page" />
     }
@@ -67,16 +72,20 @@ const Ranking = ({ contestName, numShow }) => {
     <Table bordered hover>
       <thead>
         <tr>
-          {
-            keys.map((key) => <th>{key}</th>)
-          }
+          <th>rank</th>
+          <th>username</th>
+          <th>score</th>
+          <th>time</th>
         </tr>
       </thead>
       <tbody>
         {
-          ranking.map((rank) => 
-            <tr>
-              {keys.map((key) => <td>{rank[key]}</td>)}
+          visibleRanking.map((rank, index) => 
+            <tr key={index}>
+              <td>{(page - 1) * numShow + index + 1}</td>
+              <td>{rank["name"]}</td>
+              <td>{rank["point"]}</td>
+              <td>{rank["submissionTime"]}</td>
             </tr>
           )
         }

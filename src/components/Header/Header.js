@@ -11,11 +11,10 @@ const style = {
 const Header = ({user}) => {
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" text="light">
+      <Navbar.Brand href="/">Any Contest</Navbar.Brand>
       <Nav className="mr-auto">
         <Nav.Link href="#" as="span">
-          <Link style={style} to="/">home</Link>
           <Link style={style} to="/fields">contests</Link>
-          <Link style={style} to="/users">users</Link>
         </Nav.Link>
       </Nav>
       <Nav>

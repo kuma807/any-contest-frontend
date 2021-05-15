@@ -78,7 +78,7 @@ const App = () => {
             <Submissions contestName={contestName} />
           </Route>
           <Route path="/contests/:contest/ranking">
-            <Ranking contestName={contestName} numShow={1}/>
+            <Ranking contestName={contestName}/>
           </Route>
           <Route path="/contests/:contest">
             <Contest contestName={contestName} />

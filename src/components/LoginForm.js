@@ -12,7 +12,6 @@ const LoginForm = ({setUser, setMessage}) => {
     const password = event.target[1].value;
 
     try {
-      console.log(`${id} ${password}`);
       const user = await loginService({
         id, password,
       });
@@ -25,8 +24,6 @@ const LoginForm = ({setUser, setMessage}) => {
       window.localStorage.setItem(
         'loggedUser', JSON.stringify(user)
       )
-
-      console.log(user);
 
       setUser({id: id, name: user.name});
       setMessage(`Success: welcome ${user.name}`);

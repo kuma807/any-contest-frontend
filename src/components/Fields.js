@@ -1,32 +1,49 @@
-import { Table} from 'react-bootstrap';
-import {Link} from "react-router-dom";
-import {getFieldNames} from "../services/fields";
+import { Card, Button, CardDeck } from 'react-bootstrap';
+import { useHistory} from "react-router-dom";
+import {getFields} from "../services/fields";
 import { useState, useEffect } from "react";
 
 const Fields = () => {
-  const [fieldNames, setFieldNames] = useState([]);
+  const history = useHistory();
+
+  const [fields, setFields] = useState([]);
   useEffect(() => {
-    getFieldNames().then(res => setFieldNames(res));
+    getFields().then(res => {
+      setFields(res);
+    });
   }, []);
-  if (fieldNames.length === 0) {
+
+  const handleClick = (event) => {
+    event.preventDefault();
+    history.push(`/fields/${event.target.name}`);
+  }
+
+  if (fields.length === 0) {
     return <p>Loading contests...</p>;
   }
   return (
     <>
     <h1>Contests</h1>
-    <Table striped>
-    <tbody>
-      {fieldNames.map(name =>
-        <tr key={name}>
-          <td>
-            <Link to={`/fields/${name}`}>
-              {name}
-            </Link>
-          </td>
-        </tr>
-      )}
-    </tbody>
-    </Table>
+    <CardDeck>
+    {
+      fields.map((field) => {
+        const name = field[0];
+        const description = field[1];
+        return (
+          <Card style={{ width: '16rem' }} key={name}>
+            {/* <Card.Img variant="top" src="holder.js/100px180" /> */}
+            <Card.Body>
+              <Card.Title>{name}</Card.Title>
+              <Card.Text>
+                {description}
+              </Card.Text>
+              <Button name={name} variant="primary" onClick={handleClick}>コンテスト一覧へ</Button>
+            </Card.Body>
+          </Card>
+        )
+      }
+    )}
+    </CardDeck>
     </>
   );
 }

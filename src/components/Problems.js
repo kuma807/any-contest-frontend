@@ -15,7 +15,7 @@ const Problems = ({ contestName }) => {
   }
   return (
     <div>
-    <ContestHeader contestName={contestName} />
+    <ContestHeader contestName={contestName} active="problems"/>
     <Table bordered>
     <thead>
       <tr>

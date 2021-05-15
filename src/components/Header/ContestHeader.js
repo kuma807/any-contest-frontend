@@ -1,33 +1,13 @@
-import {Navbar, Nav } from 'react-bootstrap';
+import {Nav } from 'react-bootstrap';
 import {Link} from "react-router-dom";
 
-const style = {
-  padding: 5,
-}
-
-const ContestHeader = ({ contestName }) => {
+const ContestHeader = ({ contestName, active }) => {
   return (
     <Nav variant="tabs" defaultActiveKey={`/contests/${contestName}`}>
-      <Nav.Item>
-        <Nav.Link>
-          <Link to={`/contests/${contestName}`} style={style}>home</Link>
-        </Nav.Link>
-      </Nav.Item>
-      <Nav.Item>
-        <Nav.Link>
-          <Link to={`/contests/${contestName}/problems`} style={style}>problems</Link>
-        </Nav.Link>
-      </Nav.Item>
-      <Nav.Item>
-        <Nav.Link>
-          <Link to={`/contests/${contestName}/ranking`} style={style}>ranking</Link>
-        </Nav.Link>
-      </Nav.Item>
-      <Nav.Item>
-        <Nav.Link>
-          <Link to={`/contests/${contestName}/submissions`} style={style}>submissions</Link>
-        </Nav.Link>
-      </Nav.Item>
+      <Nav.Link href={`/contests/${contestName}`} active={active==="home"}>home</Nav.Link>
+      <Nav.Link href={`/contests/${contestName}/problems`} active={active==="problems"}>problems</Nav.Link>
+      <Nav.Link href={`/contests/${contestName}/ranking`} active={active==="ranking"}>ranking</Nav.Link>
+      <Nav.Link href={`/contests/${contestName}/submissions`} active={active==="submissions"}>submissions</Nav.Link>
     </Nav>
   )
 }

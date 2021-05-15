@@ -4,13 +4,14 @@ import {filterContests} from "../services/contests";
 import { useState, useEffect } from "react";
 
 const Field = ({fieldName}) => {
-  const timeQuery = {
+  const Query = {
+    field: fieldName,
     fromTime: "2000-00-00 00:00:00",
     toTime: "2100-00-00 00:00:00"
   }
   const [contests, setcontests] = useState(null);
   useEffect(() => {
-    filterContests(timeQuery).then(res => setcontests(res));
+    filterContests(Query).then(res => setcontests(res));
   },[]);
   if (contests === null) {
     return <p>Loading contests...</p>;
