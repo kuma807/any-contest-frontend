@@ -35,9 +35,10 @@ const App = () => {
   const [user, setUser] = useState({});
   const [message, setMessage] = useState(null);
 
+  
   const matchField = useRouteMatch('/fields/:field');
   const fieldName = matchField ? matchField.params.field: null;
-
+  
   const matchContest = useRouteMatch('/contests/:contest');
   const contestName = matchContest ? matchContest.params.contest: null;
 

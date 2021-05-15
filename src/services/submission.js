@@ -3,7 +3,6 @@ const baseUrl = '/api/submissions/'
 
 const getUserSubmission = async () => {
   const storage = JSON.parse(localStorage.getItem("loggedUser"));
-  console.log(storage);
   if (storage === null) {
     return [];
   }

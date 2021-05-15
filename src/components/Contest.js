@@ -8,6 +8,7 @@ const Contest = ({ contestName }) => {
   const [contest, setContest] = useState(null);
   const [isLogedIn, setIsLogedIn] = useState(false);
   const [registered, setRegistered] = useState(true);
+  const [contestStarted, setContestStarted] = useState(true);
 
   const handleRegister = (event) => {
     event.preventDefault();
@@ -27,9 +28,9 @@ const Contest = ({ contestName }) => {
       if (storage !== null) {
         const id = storage.userid;
         const newRegistered = res[0].ranking.filter((rank) => rank.id === id).length === 0 ? false: true;
-        console.log(newRegistered);
         setRegistered(newRegistered);
         setIsLogedIn(true);
+        setContestStarted(res[0]["__v"]);
       }
     });
   },[]);
@@ -44,10 +45,10 @@ const Contest = ({ contestName }) => {
         <div>
           {contest.description}
         </div>
-        {isLogedIn && !registered &&
+        {!contestStarted && isLogedIn && !registered &&
           <Button variant="primary" onClick={handleRegister}>登録</Button>
         }
-        {isLogedIn && registered &&
+        {!contestStarted && isLogedIn && registered &&
           <Button variant="secondary" onClick={handleUnregister}>登録解除</Button>
         }
         {!isLogedIn &&

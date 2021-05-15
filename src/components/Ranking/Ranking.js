@@ -34,7 +34,6 @@ const Ranking = ({ contestName }) => {
   useEffect(
     () => {
       getRanking(contestName).then((res) => {
-        console.log(res);
         res.sort(compare);
         setRanking(res);
         setMaxPage(Math.ceil(res.length / numShow));
