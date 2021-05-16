@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 const Field = ({fieldName}) => {
   const Query = {
     field: fieldName,
-    fromTime: "2000-00-00 00:00:00",
+    fromTime: "2000-01-01 00:00:00",
     toTime: "2100-00-00 00:00:00"
   }
   const [contests, setcontests] = useState(null);

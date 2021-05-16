@@ -15,6 +15,7 @@ const Header = ({user}) => {
       <Nav className="mr-auto">
         <Nav.Link href="#" as="span">
           <Link style={style} to="/fields">contests</Link>
+          <Link style={style} to="/rating">rating</Link>
         </Nav.Link>
       </Nav>
       <Nav>

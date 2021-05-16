@@ -16,6 +16,7 @@ import Problems from "./components/Problems";
 import Problem from "./components/Problem";
 import Submissions from "./components/Submission/Submissions";
 import Ranking from "./components/Ranking/Ranking";
+import RatingPage from "./components/Rating/RatingPage";
 import Header from './components/Header/Header';
 import LoginForm from './components/LoginForm';
 import SignupForm from './components/SignupForm';
@@ -98,6 +99,9 @@ const App = () => {
           </Route>
           <Route path="/signup">
             <SignupForm setUser={(userData) => setUser(userData)} setMessage={(messageData) => setMessage(messageData)} />
+          </Route>
+          <Route path="/rating">
+            <RatingPage />
           </Route>
           <Route path="/">
             <HomeForm />
