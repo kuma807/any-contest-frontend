@@ -17,6 +17,9 @@ const Problem = ({problemName}) => {
       <h1>
         {problem.name}
       </h1>
+      <h4>
+        以下の問題分を入力欄に打ち込んでください。
+      </h4>
       {problem.problemStatement}
       <JudgeForm judgeType={problem.judgeType} contestName={problem.contest} problemName={problemName}/>
     </div>

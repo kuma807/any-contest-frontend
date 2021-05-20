@@ -35,7 +35,7 @@ const SimpleInput = ({contestName, problemName}) => {
   return (
     <Form onSubmit={onSubmit}>
       <Form.Group controlId="exampleForm.ControlTextarea1">
-        <Form.Label>answer</Form.Label>
+        <h4>入力欄</h4>
         <Form.Control as="textarea" rows={1} />
         {isLogedIn &&
           <Button variant="primary" type="submit">
