@@ -11,6 +11,16 @@ const getContest = async (contestName) => {
   return response.data;
 }
 
+const makeContest = async (contestDate) => {
+  const storage = JSON.parse(localStorage.getItem("loggedUser"));
+  if (storage === null) {
+    return [];
+  }
+  const Authorization = `bearer ${storage.token}`;
+  const response = await axios.post(baseUrl, contestDate, { headers: { Authorization }});
+  return response.data;
+}
+
 const getRanking = async (contestName) => {
   const response = await axios.get(`${baseUrl}ranking/${contestName}`);
   return response.data;
@@ -33,4 +43,4 @@ const checkRegistered = async ({contestName, userid}) => {
   return response.data;
 }
 
-export {filterContests, getContest, getRanking, register, unregister, checkRegistered};
+export {filterContests, getContest, makeContest, getRanking, register, unregister, checkRegistered};

@@ -15,11 +15,15 @@ import Contest from "./components/Contest";
 import Problems from "./components/Problems";
 import Problem from "./components/Problem";
 import Submissions from "./components/Submission/Submissions";
-import Ranking from "./components/Ranking/Ranking";
+import ContestRanking from "./components/Ranking/ContestRankingPage";
 import RatingPage from "./components/Rating/RatingPage";
 import Header from './components/Header/Header';
 import LoginForm from './components/LoginForm';
 import SignupForm from './components/SignupForm';
+import CreateContestForm from './components/CreateContest/CreateContestForm';
+import SelectContest from './components/CreateContest/SelectContest';
+import CreateContest from './components/CreateProblem/CreateProblem';
+import CreateProblem from './components/CreateProblem/CreateProblem';
 
 const Users = () => (
   <div>
@@ -45,6 +49,15 @@ const App = () => {
 
   const matchProblem = useRouteMatch('/problems/:problem');
   const problemName = matchProblem ? matchProblem.params.problem: null;
+
+  const matchCreateContest = useRouteMatch('/create_contest/:contestName');
+  const createContestName = matchCreateContest ? matchCreateContest.params.contestName: null;
+
+  const matchCreateProblem = useRouteMatch('/create_problem/:problemName');
+  const createProblemName = matchCreateProblem ? matchCreateProblem.params.problemName: null;
+
+  const matchUserName = useRouteMatch('/rating/:userName');
+  const ratingUserName = matchUserName ? matchUserName.params.userName: null;
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedUser');
@@ -80,7 +93,7 @@ const App = () => {
             <Submissions contestName={contestName} />
           </Route>
           <Route path="/contests/:contest/ranking">
-            <Ranking contestName={contestName}/>
+            <ContestRanking contestName={contestName}/>
           </Route>
           <Route path="/contests/:contest">
             <Contest contestName={contestName} />
@@ -100,8 +113,23 @@ const App = () => {
           <Route path="/signup">
             <SignupForm setUser={(userData) => setUser(userData)} setMessage={(messageData) => setMessage(messageData)} />
           </Route>
+          <Route path="/rating/:userName">
+            <RatingPage userName={ratingUserName}/>
+          </Route>
           <Route path="/rating">
             <RatingPage />
+          </Route>
+          <Route path="/create_contest/:contestName">
+            <CreateContestForm contestName={createContestName} setMessage={(messageData) => setMessage(messageData)} />
+          </Route>
+          <Route path="/create_contest">
+            <SelectContest />
+          </Route>
+          <Route path="/create_problem/:problemName">
+            <CreateProblem problemName={createProblemName}/>
+          </Route>
+          <Route path="/create_problem/">
+            <CreateProblem />
           </Route>
           <Route path="/">
             <HomeForm />

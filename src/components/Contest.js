@@ -40,6 +40,9 @@ const Contest = ({ contestName }) => {
   return (
     <>
       <ContestHeader contestName={contestName} active="home"/>
+      <div>
+        コンテスト時間:{contest.startTime.substring(0, 16)}〜{contest.endTime.substring(0, 16)}
+      </div>
       <Jumbotron>
         <h1>{contest.name}</h1>
         <div>

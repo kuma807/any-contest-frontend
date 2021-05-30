@@ -11,4 +11,9 @@ const getUserRating = async (userid) => {
   return response.data;
 }
 
-export {getUserRating, getQuery};
+const getFieldRating = async (fieldName) => {
+  const response = await axios.get(`${baseUrl}fieldName/${fieldName}`)
+  return response.data;
+}
+
+export {getUserRating, getQuery, getFieldRating};

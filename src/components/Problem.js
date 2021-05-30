@@ -3,6 +3,10 @@ import JudgeForm from "./SubmissionForm/JudgeForm";
 import {getProblem} from "../services/problems";
 import { useState, useEffect } from "react";
 
+const style = {
+  fontWeight: "bold"
+}
+
 const Problem = ({problemName}) => {
   const [problem, setProblem] = useState(null);
   useEffect(() => {
@@ -14,13 +18,22 @@ const Problem = ({problemName}) => {
   return (
     <div>
       <ContestHeader contestName={problem.contest} />
-      <h1>
-        {problem.name}
-      </h1>
-      <h4>
-        以下の問題分を入力欄に打ち込んでください。
-      </h4>
-      {problem.problemStatement}
+      <span>
+        <h2 style={style}>
+          {problem.name}
+        </h2>
+        <hr />
+      </span>
+      <section>
+        <span>
+          <h3 style={style}>
+            問題文
+          </h3>
+        </span>
+        <span>
+          {problem.problemStatement}
+        </span>
+      </section>
       <JudgeForm judgeType={problem.judgeType} contestName={problem.contest} problemName={problemName}/>
     </div>
   )

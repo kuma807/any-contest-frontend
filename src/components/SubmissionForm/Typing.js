@@ -4,9 +4,11 @@ import {submit} from "../../services/submission";
 import { useState, useEffect } from "react";
 import CreateAccountButton from "../CreateAccountButton";
 
+
 const SimpleInput = ({contestName, problemName}) => {
   const history = useHistory();
   const [isLogedIn, setIsLogedIn] = useState(false);
+  const [typedString, setTypedString] = useState("");
 
   useEffect(() => {
     const storage = JSON.parse(window.localStorage.getItem('loggedUser'));
@@ -26,22 +28,15 @@ const SimpleInput = ({contestName, problemName}) => {
         answer: answer
       });
       history.push(`/contests/${contestName}/submissions`);
-    } 
+    }
     catch (exception) {
       console.log("err");
     }
   }
   return (
-    <>
-    <section>
-      <span>
-        <h3 style={{marginTop: 40, fontWeight: "bold"}}>
-          入力
-        </h3>
-      </span>
-    </section>
     <Form onSubmit={onSubmit}>
       <Form.Group controlId="exampleForm.ControlTextarea1">
+        <h4 style={{paddingTop: 400, marginTop: 400}}>入力欄</h4>
         <Form.Control as="textarea" rows={1} />
         {isLogedIn &&
           <Button variant="primary" type="submit">
@@ -53,7 +48,6 @@ const SimpleInput = ({contestName, problemName}) => {
         }
       </Form.Group>
     </Form>
-    </>
   )
 }
 

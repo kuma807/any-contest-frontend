@@ -1,16 +1,21 @@
-import { Dropdown } from 'react-bootstrap';
+import { Dropdown, Form } from 'react-bootstrap';
 import { useState, useEffect } from "react";
 import {getUserRating} from "../../services/rating";
 import RatingTable from "./RatingTable";
 import RatingGraph from "./RatingGraph";
 
-const RatingPage = () => {
+const RatingPage = ({userName}) => {
+  console.log(userName);
+  const storage = JSON.parse(window.localStorage.getItem('loggedUser'));
   const [rating, setRating] = useState(null);
   const [rate, setRate] = useState(null);
-  const storage = JSON.parse(window.localStorage.getItem('loggedUser'));
+  const [userid, setUserid] = useState(userName ? userName : (storage ? storage.userid: ""));
+  const onChange = (event) => {
+    event.preventDefault();
+    setUserid(event.target.value);
+  }
   useEffect(() => {
-    if (storage !== null) {
-      const userid = storage.userid;
+    if (userid !== "") {
       getUserRating(userid)
         .then(res => {
           res.map((r) => {
@@ -44,24 +49,32 @@ const RatingPage = () => {
             r.revRate = revRate;
             return r;
           })
-          setRating(res);
-          setRate(res[0]);
+          if (res.length !== 0) {
+            setRating(res);
+            setRate(res[0]);
+          }
       });
     }
-  }, []);
+  }, [userid]);
 
   if (rating === null || rate === null) {
     return (
-      <div>
-      Loading contests...
-      </div>
+      <div style={{paddingTop: 20}}>
+      <Form>
+        <Form.Label>userid</Form.Label>
+        <Form.Control defaultValue={userid} onChange={onChange}/>
+      </Form>
+    </div>
     )
   }
   if (rating.length === 0) {
     return (
-      <div>
-      ユーザー登録してください
-      </div>
+      <div style={{paddingTop: 20}}>
+      <Form>
+        <Form.Label>userid</Form.Label>
+        <Form.Control defaultValue={userid} onChange={onChange}/>
+      </Form>
+    </div>
     )
   }
 
@@ -72,6 +85,12 @@ const RatingPage = () => {
 
   return (
     <>
+    <div style={{paddingTop: 20}}>
+      <Form>
+        <Form.Label>userid</Form.Label>
+        <Form.Control defaultValue={userid} onChange={onChange}/>
+      </Form>
+    </div>
     <Dropdown>
       <Dropdown.Toggle variant="primary" id="dropdown-basic">
         コンテストを選ぶ
